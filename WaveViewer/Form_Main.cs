@@ -80,7 +80,11 @@ namespace WaveViewer
 
         private void timer_update_Tick(object sender, EventArgs e)
         {
+            this.timer_update.Stop();
+
             this.Invalidate();
+
+            this.timer_update.Start();
         }
 
         private void Worker_WhenDataReceived(List<double> waveform)
