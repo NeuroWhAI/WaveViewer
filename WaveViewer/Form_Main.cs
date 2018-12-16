@@ -16,6 +16,11 @@ namespace WaveViewer
         {
             InitializeComponent();
 
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+
 
             var argDict = ParseCmdLineArgs();
 
@@ -50,9 +55,9 @@ namespace WaveViewer
         private Graph m_graph = null;
         private Seismograph m_worker = null;
 
-        private void panel_wave_Paint(object sender, PaintEventArgs e)
+        private void Form_Main_Paint(object sender, PaintEventArgs e)
         {
-            var size = this.panel_wave.Size;
+            var size = this.ClientSize;
 
             if (m_graph == null || m_worker == null)
             {
@@ -62,13 +67,20 @@ namespace WaveViewer
             }
             else
             {
-                m_graph.Draw(e.Graphics, size);
+                using (var bufferG = BufferedGraphicsManager.Current.Allocate(e.Graphics, this.ClientRectangle))
+                {
+                    var g = bufferG.Graphics;
+
+                    m_graph.Draw(g, size);
+
+                    bufferG.Render(e.Graphics);
+                }
             }
         }
 
         private void timer_update_Tick(object sender, EventArgs e)
         {
-            this.panel_wave.Invalidate();
+            this.Invalidate();
         }
 
         private void Worker_WhenDataReceived(List<double> waveform)

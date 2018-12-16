@@ -29,18 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.panel_wave = new System.Windows.Forms.Panel();
             this.timer_update = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
-            // 
-            // panel_wave
-            // 
-            this.panel_wave.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_wave.Location = new System.Drawing.Point(0, 0);
-            this.panel_wave.Name = "panel_wave";
-            this.panel_wave.Size = new System.Drawing.Size(683, 191);
-            this.panel_wave.TabIndex = 0;
-            this.panel_wave.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_wave_Paint);
             // 
             // timer_update
             // 
@@ -53,17 +43,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(683, 191);
-            this.Controls.Add(this.panel_wave);
             this.Name = "Form_Main";
             this.Text = "Wave Viewer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Main_FormClosing);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form_Main_Paint);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel_wave;
         private System.Windows.Forms.Timer timer_update;
     }
 }

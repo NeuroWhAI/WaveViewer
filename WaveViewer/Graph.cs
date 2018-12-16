@@ -72,13 +72,13 @@ namespace WaveViewer
 
         public void Draw(Graphics g, Size size)
         {
+            g.Clear(Color.White);
+
+
             if (m_waveform.Count <= 0)
             {
                 return;
             }
-
-
-            g.Clear(Color.White);
 
 
             int[] copyWaveform = null;
