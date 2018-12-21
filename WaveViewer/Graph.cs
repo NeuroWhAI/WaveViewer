@@ -25,17 +25,60 @@ namespace WaveViewer
         public bool IsAccel
         { get; set; }
 
+        private double m_gain = 1.0;
         public double Gain
-        { get; set; } = 1.0;
+        {
+            get => m_gain;
+            set
+            {
+                if (value > 0)
+                {
+                    m_gain = value;
+                }
+            }
+        }
+
+        private int m_maxLen = 3072;
+        public int MaxLength
+        {
+            get => m_maxLen;
+            set
+            {
+                if (value > 0)
+                {
+                    m_maxLen = value;
+                }
+            }
+        }
+
+        private double m_dangerValue = 0.0016;
+        public double DangerValue
+        {
+            get => m_dangerValue;
+            set
+            {
+                if (value > 0)
+                {
+                    m_dangerValue = value;
+                }
+            }
+        }
+
+        private double m_zoom = 4;
+        public double Zoom
+        {
+            get => m_zoom;
+            set
+            {
+                if (value > 0)
+                {
+                    m_zoom = value;
+                }
+            }
+        }
 
         private double HeightScale
         { get; set; } = 10000.0;
-
-        public int MaxLength
-        { get; set; } = 3072;
-
-        public double DangerValue
-        { get; set; } = 0.0016;
 
         private DateTime m_latestDataTime;
         private readonly object m_syncDataTime = new object();
@@ -92,7 +135,7 @@ namespace WaveViewer
             int maxData = copyWaveform.AsParallel().Max(Math.Abs);
 
 
-            HeightScale = size.Height / 2 * 0.9 / Math.Max(maxData / Gain, DangerValue / 4);
+            HeightScale = size.Height / 2 * 0.9 / Math.Max(maxData / Gain, DangerValue / Zoom);
 
 
             int halfHeight = size.Height / 2;

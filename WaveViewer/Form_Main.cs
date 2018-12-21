@@ -101,11 +101,13 @@ namespace WaveViewer
                 && args.TryGetValue("--gain", out string gainText)
                 && args.TryGetValue("--danger", out string dangerText)
                 && args.TryGetValue("--accel", out string accel)
-                && args.TryGetValue("--len", out string lenText))
+                && args.TryGetValue("--len", out string lenText)
+                && args.TryGetValue("--zoom", out string zoomText))
             {
                 if (double.TryParse(gainText, out double gain)
                     && double.TryParse(dangerText, out double danger)
-                    && int.TryParse(lenText, out int maxLen))
+                    && int.TryParse(lenText, out int maxLen)
+                    && double.TryParse(zoomText, out double zoom))
                 {
                     var graph = new Graph()
                     {
@@ -114,6 +116,7 @@ namespace WaveViewer
                         DangerValue = danger,
                         IsAccel = (accel.ToLower() == "true"),
                         MaxLength = maxLen,
+                        Zoom = zoom,
                     };
 
                     return graph;
