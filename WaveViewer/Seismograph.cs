@@ -38,8 +38,8 @@ namespace WaveViewer
         public delegate void SeismographDataReceivedEventHandler(List<double> waveform);
         public event SeismographDataReceivedEventHandler WhenDataReceived = null;
 
-        private int SamplingRate
-        { get; set; } = 0;
+        public int SamplingRate
+        { get; private set; } = 0;
 
         //###########################################################################################################
 

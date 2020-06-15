@@ -109,8 +109,7 @@ namespace WaveViewer
                     
                     m_leftSample = int.Parse(m.Groups[2].ToString());
 
-                    double rate = 0;
-                    double.TryParse(m.Groups[3].ToString(), out rate);
+                    double.TryParse(m.Groups[3].ToString(), out double rate);
 
                     ReserveChunk(m_leftSample, rate);
 

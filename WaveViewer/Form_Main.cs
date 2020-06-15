@@ -71,7 +71,7 @@ namespace WaveViewer
                 {
                     var g = bufferG.Graphics;
 
-                    m_graph.Draw(g, size);
+                    m_graph.Draw(g, size, m_worker.SamplingRate);
 
                     bufferG.Render(e.Graphics);
                 }

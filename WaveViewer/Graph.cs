@@ -113,7 +113,7 @@ namespace WaveViewer
 
         //##############################################################################################
 
-        public void Draw(Graphics g, Size size)
+        public void Draw(Graphics g, Size size, int samplingRate)
         {
             g.Clear(Color.White);
 
@@ -150,8 +150,27 @@ namespace WaveViewer
             }
 
 
+            DateTime time;
+
+            lock (m_syncDataTime)
+            {
+                time = m_latestDataTime;
+            }
+
+
             if (copyWaveform.Length > 0)
             {
+                var elapsedTime = DateTime.UtcNow.AddHours(9.0) - time;
+                double futureDataCount = elapsedTime.TotalSeconds * samplingRate;
+                if (futureDataCount < 0)
+                {
+                    futureDataCount = 0;
+                }
+                else if (futureDataCount > MaxLength)
+                {
+                    futureDataCount = MaxLength;
+                }
+
                 double widthScale = (double)size.Width / copyWaveform.Length;
 
                 int i = 0;
@@ -161,8 +180,8 @@ namespace WaveViewer
                 {
                     float y = (float)(data / Gain * HeightScale);
 
-                    g.DrawLine(Pens.Blue, (float)((i - 1) * widthScale), prevY + halfHeight,
-                        (float)(i * widthScale), y + halfHeight);
+                    g.DrawLine(Pens.Blue, (float)((i - 1 - futureDataCount) * widthScale), prevY + halfHeight,
+                        (float)((i - futureDataCount) * widthScale), y + halfHeight);
 
                     prevY = y;
                     ++i;
@@ -181,13 +200,6 @@ namespace WaveViewer
             else
             {
                 mmi = Earthquake.ConvertPgvToMMI(groundVal);
-            }
-
-            DateTime time;
-
-            lock (m_syncDataTime)
-            {
-                time = m_latestDataTime;
             }
 
             using (var font = new Font(SystemFonts.DefaultFont.FontFamily, 14.0f, FontStyle.Regular))
