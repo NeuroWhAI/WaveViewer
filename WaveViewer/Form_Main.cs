@@ -24,6 +24,12 @@ namespace WaveViewer
 
             var argDict = ParseCmdLineArgs();
 
+            if (argDict.TryGetValue("--name", out string name)
+                && !string.IsNullOrWhiteSpace(name))
+            {
+                Text = $"{Text} - {name.Trim()}";
+            }
+
             m_graph = ParseGraph(argDict);
 
             if (argDict.TryGetValue("--type", out string type))
