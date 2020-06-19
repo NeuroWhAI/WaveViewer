@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,11 +64,40 @@ namespace WaveViewer
 
         private void Form_Main_Load(object sender, EventArgs e)
         {
-
+            try
+            {
+                if (File.Exists("size.txt"))
+                {
+                    using (var sr = new StreamReader("size.txt"))
+                    {
+                        Width = int.Parse(sr.ReadLine());
+                        Height = int.Parse(sr.ReadLine());
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                Console.Error.WriteLine(err.Message);
+                Console.Error.WriteLine(err.StackTrace);
+            }
         }
 
         private void Form_Main_FormClosing(object sender, FormClosingEventArgs e)
         {
+            try
+            {
+                using (var sw = new StreamWriter("size.txt"))
+                {
+                    sw.WriteLine(Width);
+                    sw.WriteLine(Height);
+                }
+            }
+            catch (Exception err)
+            {
+                Console.Error.WriteLine(err.Message);
+                Console.Error.WriteLine(err.StackTrace);
+            }
+
             if (m_worker != null)
             {
                 m_worker.Stop();
