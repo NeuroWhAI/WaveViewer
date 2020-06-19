@@ -202,16 +202,10 @@ namespace WaveViewer
                 mmi = Earthquake.ConvertPgvToMMI(groundVal);
             }
 
-            using (var font = new Font(SystemFonts.DefaultFont.FontFamily, 14.0f, FontStyle.Regular))
+            using (var font = new Font(SystemFonts.DefaultFont.FontFamily, 12.0f, FontStyle.Regular))
             {
-                g.DrawString(string.Format("{0} ({1})", Name, time.ToString("s")), font, Brushes.Black,
-                    2, size.Height - font.Height - 2);
-
-                g.DrawString(string.Format("Danger: {0:F5}%", groundVal / DangerValue * 100.0),
+                g.DrawString(string.Format("{0} 진도 {1} ({2})", Name, Earthquake.MMIToString(mmi), time.ToString("s")),
                     font, Brushes.Black, 2, 4);
-
-                g.DrawString(string.Format("Intensity: {0} ({1:F5})", Earthquake.MMIToString(mmi), groundVal),
-                    font, Brushes.Black, 2, 6 + font.Height);
             }
         }
     }

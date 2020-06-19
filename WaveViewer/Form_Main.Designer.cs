@@ -40,12 +40,14 @@
             // 
             // Form_Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(683, 191);
+            this.ClientSize = new System.Drawing.Size(781, 239);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form_Main";
             this.Text = "Wave Viewer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Main_FormClosing);
+            this.Load += new System.EventHandler(this.Form_Main_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form_Main_Paint);
             this.ResumeLayout(false);
 

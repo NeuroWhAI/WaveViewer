@@ -61,6 +61,19 @@ namespace WaveViewer
         private Graph m_graph = null;
         private Seismograph m_worker = null;
 
+        private void Form_Main_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form_Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (m_worker != null)
+            {
+                m_worker.Stop();
+            }
+        }
+
         private void Form_Main_Paint(object sender, PaintEventArgs e)
         {
             var size = this.ClientSize;
@@ -200,14 +213,6 @@ namespace WaveViewer
             }
 
             return argDict;
-        }
-
-        private void Form_Main_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (m_worker != null)
-            {
-                m_worker.Stop();
-            }
         }
     }
 }
